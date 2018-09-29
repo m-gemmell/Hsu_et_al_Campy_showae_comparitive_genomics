@@ -1,0 +1,49 @@
+Gene	129_VTPP	129_VTPPs	129_MSG	B32_SW	CSUNSWCD	ATCC51146	CAM	CC57c	B91_TPP	B91_SC	B91_SCBr	Prokka	UniRef	Type	Rownames
+ptlC | virB4 family	1	1	1	1	1	0	1	1	0	0	0	PROKKA_B32_SW_02261  Type IV secretion system protein PtlC	UniRef90_B9D147: Type IV secretion/conjugal transfer ATPase, VirB4 family|2502	Type IV Secretion System	1
+ptlE	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02268  Type IV secretion system protein PtlE	No_Uniref: NO_NAME	Type IV Secretion System	2
+ptlG	1	1	1	1	1	0	1	1	0	0	0	PROKKA_CC57c_01254  Type IV secretion system protein PtlG	UniRef90_U2F4B8: Type IV secretion|1194	Type IV Secretion System	3
+virB10	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02271  Type IV secretion system protein virB10	No_Uniref: NO_NAME	Type IV Secretion System	4
+virB11	1	1	1	1	1	0	1	1	0	0	0	PROKKA_129_MSG_02169  Type IV secretion system protein VirB11	UniRef90_B9D153: Type II/IV secretion system protein|945	Type IV Secretion System	5
+virB11	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02272  Type IV secretion system protein VirB11	No_Uniref: NO_NAME	Type IV Secretion System	6
+virB2	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_VTPP_00025  Type IV secretion system protein virB2	No_Uniref: NO_NAME	Type IV Secretion System	7
+virB4	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02264  Type IV secretion system protein virB4	No_Uniref: NO_NAME	Type IV Secretion System	8
+virB5	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02265  Type IV secretion system protein virB5	No_Uniref: NO_NAME	Type IV Secretion System	9
+virB9	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02270  Type IV secretion system protein virB9	No_Uniref: NO_NAME	Type IV Secretion System	10
+virD4	1	1	1	1	1	0	1	1	0	0	0	PROKKA_CAM_01326  Protein VirD4	UniRef90_M5IDY7: NO_NAME|1944	Type IV Secretion System	11
+virD4	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_02273  Protein VirD4	No_Uniref: NO_NAME	Type IV Secretion System	12
+S-layer protein | Surface array protein	1	1	1	1	1	0	1	0	0	0	0	PROKKA_CAM_00601  S-layer protein	UniRef90_M5IQ06: Surface array protein|3258	Surface proteins	13
+S-layer protein | Surface array protein	1	1	1	1	1	0	1	0	0	0	0	PROKKA_B32_SW_00106  S-layer protein	UniRef90_M5INW2: Surface array protein|3759	Surface proteins	14
+S-layer protein | Surface array protein	1	1	1	1	1	0	0	0	0	0	0	PROKKA_B32_SW_01523  S-layer protein	UniRef90_M5IR23: Surface array protein|5232	Surface proteins	15
+S-layer protein       	1	1	1	1	1	0	0	0	0	0	0	PROKKA_B32_SW_00105  S-layer protein	UniRef90_C6RID5: NO_NAME|2121	Surface proteins	16
+S-layer protein       	1	1	1	1	1	0	0	0	0	0	0	PROKKA_CSUNSWCD_01397  S-layer protein	UniRef90_M5ISD2: S-layer protein|3528	Surface proteins	17
+S-layer protein       	0	1	1	0	0	1	1	0	0	0	0	PROKKA_CAM_00604  S-layer protein	UniRef90_C6RGY2: NO_NAME|3711	Surface proteins	18
+S-layer protein       	1	1	1	0	0	0	0	0	0	0	0	PROKKA_129_MSG_00892  S-layer protein	No_Uniref: NO_NAME	Surface proteins	19
+S-layer protein       	1	0	0	1	1	0	0	0	0	0	0	PROKKA_B32_SW_00107  S-layer protein	No_Uniref: NO_NAME	Surface proteins	20
+S-layer protein | SapB	0	0	0	1	1	0	0	0	0	0	0	PROKKA_B32_SW_00099  S-layer protein	UniRef90_M5IQ08: SapB|2754	Surface proteins	21
+S-layer protein       	0	0	0	0	0	1	1	0	0	0	0	PROKKA_ATCC51146_01861  S-layer protein	UniRef90_C6RGY8: Putative S-layer protein|2640	Surface proteins	22
+S-layer protein       	0	0	0	0	0	1	1	0	0	0	0	PROKKA_CAM_02101  S-layer protein	UniRef90_C6REM5: NO_NAME|537	Surface proteins	23
+S-layer protein       	0	0	0	0	0	1	1	0	0	0	0	PROKKA_ATCC51146_01860  S-layer protein	UniRef90_C6RGY7: Putative S-layer protein|2703	Surface proteins	24
+S-layer protein       	0	0	0	0	0	1	0	0	0	0	0	PROKKA_ATCC51146_00054  S-layer protein	UniRef90_C6RJ79: NO_NAME|741	Surface proteins	25
+S-layer protein       	0	0	0	0	0	1	0	0	0	0	0	PROKKA_ATCC51146_00522  S-layer protein	UniRef90_C6REM6: NO_NAME|5421	Surface proteins	26
+S-layer protein       	0	0	0	0	0	1	0	0	0	0	0	PROKKA_ATCC51146_01408  S-layer protein	UniRef90_C6RI60: NO_NAME|1947	Surface proteins	27
+S-layer protein       	0	0	0	0	0	1	0	0	0	0	0	PROKKA_ATCC51146_01616  S-layer protein	UniRef90_C6REM5: NO_NAME|537	Surface proteins	28
+S-layer protein       	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_00602  S-layer protein	UniRef90_C6RID5: NO_NAME|2121	Surface proteins	29
+S-layer protein       	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_00816  S-layer protein	UniRef90_C6RID5: NO_NAME|2121	Surface proteins	30
+S-layer protein       	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_01989  S-layer protein	No_Uniref: NO_NAME	Surface proteins	31
+RAMP protein csm3	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02218  CRISPR type III-associated RAMP protein Csm3	No_Uniref: NO_NAME	CRISPR	32
+cas1	0	0	0	0	0	1	1	1	1	1	1	PROKKA_CAM_00452  CRISPR-associated endonuclease Cas1	UniRef90_B9CY25: NO_NAME|156	CRISPR	33
+cas1 | cas11	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02183  CRISPR-associated endonuclease Cas1 1	UniRef90_C8PKY6: CRISPR-associated endonuclease Cas1|2193	CRISPR	34
+cas11	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02224  CRISPR-associated endonuclease Cas1 1	No_Uniref: NO_NAME	CRISPR	35
+cas2	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02182  CRISPR-associated endonuclease Cas2	No_Uniref: NO_NAME	CRISPR	36
+cas2	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02225  CRISPR-associated endonuclease Cas2	No_Uniref: NO_NAME	CRISPR	37
+cas2	0	0	0	0	0	1	1	1	1	1	1	PROKKA_ATCC51146_02006  CRISPR-associated endoribonuclease Cas2	UniRef90_C6RIV9: CRISPR-associated endoribonuclease Cas2|291	CRISPR	38
+cas3	0	0	0	0	0	1	1	1	0	0	0	PROKKA_ATCC51146_02008  CRISPR-associated nuclease/helicase Cas3	UniRef90_C6RIW1: CRISPR-associated helicase Cas3|2196	CRISPR	39
+cas10	0	0	0	0	0	0	1	0	0	0	0	PROKKA_CAM_02220  CRISPR-associated protein Cas10/Csm1	No_Uniref: NO_NAME	CRISPR	40
+ CRISPR-associated protein, Csh2 family	0	0	0	0	0	1	1	1	0	0	0	PROKKA_ATCC51146_02010  hypothetical protein	UniRef90_A7ZDW6: Crispr-associated protein, Csh2 family|939	CRISPR	41
+ CRISPR-associated protein, TM1801 family	0	0	0	0	0	0	0	0	1	1	1	PROKKA_B91_SCBr_00650  hypothetical protein	UniRef90_U2EVR5: CRISPR-associated protein, TM1801 family|873	CRISPR	42
+cas5	0	0	0	0	0	1	1	0	0	0	0	PROKKA_CAM_00448  hypothetical protein	UniRef90_M3I2M9: CRISPR-associated protein Cas5 (Fragment)|543	CRISPR	43
+cas3	0	0	0	0	0	0	0	0	1	1	1	PROKKA_B91_SCBr_00648  Putative CRISPR-associated nuclease/helicase Cas3	UniRef90_U2GNL2: CRISPR-associated helicase Cas3|2244	CRISPR	44
+leukotoxin | RTX toxin protein	0	0	0	0	0	0	0	1	0	0	0	PROKKA_CC57c_02110  Leukotoxin	UniRef90_M3GVW6: RTX toxin protein|1641	RTX Toxins	45
+leukotoxin | Type I secretion system ATPase	0	0	0	0	0	0	0	1	1	1	1	PROKKA_CC57c_01269  Leukotoxin export ATP-binding protein LtxB	UniRef90_M3I1B7: Type I secretion system ATPase|2115	RTX Toxins	46
+Toxin RTX-I translocation ATP-binding protein | Type I secretion system ATPase	0	0	0	0	0	0	0	1	1	1	1	PROKKA_B91_SCBr_00107  Toxin RTX-I translocation ATP-binding protein	UniRef90_B9CZ33: Type I secretion system ATPase|2127	RTX Toxins	47
+Filamentous hemagglutinin transporter protein FhaC |  ATP phosphoribosyltransferase	0	0	0	0	0	0	0	1	1	1	1	PROKKA_CC57c_02171  Filamentous hemagglutinin transporter protein FhaC	UniRef90_M3HYW1: ATP phosphoribosyltransferase|1746	Filamentous hemagglutinin (Fh)	48

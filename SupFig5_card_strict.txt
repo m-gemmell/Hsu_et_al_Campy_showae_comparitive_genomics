@@ -1,0 +1,8 @@
+gene	B32_SW	B91_SC	B91_SCBr	B91_TPP	CAM	129_MSG	129_VTPP	129_VTPPs	CC57c	ATCC51146	CSUNSWCD	Description
+acrF	1	1	1	1	1	1	1	1	1	1	1	AcrF is a inner membrane transporter, similar to AcrB.
+cmeA	1	1	1	1	1	1	1	1	1	1	1	CmeA is the membrane fusion protein of the CmeABC multidrug efflux complex.
+macA	1	1	1	1	1	1	1	1	1	1	1	MacA is a membrane fusion protein that forms an antibiotic efflux complex with MacB and TolC.
+macB	1	1	1	1	1	1	1	1	0	1	1	MacB is an ATP-binding cassette (ABC) transporter that exports macrolides with 14- or 15- membered lactones. It forms an antibiotic efflux complex with MacA and TolC.
+mexQ	1	1	1	1	1	1	1	1	1	1	1	MexQ is the inner membrane transporter of the multidrug efflux pump MexPQ-OpmE.
+Staphylococcus aureus gyrB conferring resistance to aminocoumarin	1	0	0	0	0	0	0	0	0	1	1	Point mutation in Staphylococcus aureus resulting in aminocoumarin resistance
+Staphylococcus aureus rpoB mutants conferring resistance to rifampicin	1	1	1	0	1	1	1	1	1	1	1	Point mutations that occurs in Staphylococcus aureus rpoB resulting in resistance to rifampicin

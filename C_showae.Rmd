@@ -1,0 +1,295 @@
+---
+title: Comparative genomics and genome biology of *Campylobacter showae*
+output: html_document
+---
+
+#### Tiffany Hsu, Matthew R. Gemmell, Eric A. Franzosa, Susan Berry, Indrani Mukhopadhya, Richard Hansen, Monia Michaud, Hans Nielsen, William Miller, Henrik Nielsen, Mona Bajaj-Elliott, Curtis Huttenhower, Wendy S. Garrett, Georgina L. Hold
+
+This document contains all figure production carried out in R for the manuscript. 
+
+All data to reproduce analysis can be found here:
+https://github.com/m-gemmell/Hsu_et_al_Campy_showae_comparitive_genomics
+
+## Figure 1C: Pangenome analyses for *C. showae*
+```{r Fig_1C}
+### Load the package or install if not present
+if (!require("ggplot2")) {install.packages("ggplot2")
+  library( ggplot2 )}
+# Read in data
+campy <- read.delim( file="Fig1C_pangenomes_100.txt", sep="\t" )
+# Subset out the shared genes and see where it plateaus
+campy_shared <- campy[campy$type == 'shared', ]
+campy_shared_genes <- campy_shared[,1:2]
+names(campy_shared_genes ) <- c("n", "F")
+sharednls <- nls(F ~ kppa * exp(- n / tau ) + omega, data = campy_shared_genes, 
+                 start = list(kppa = 610, tau = 2.16 , omega = 1806 ))
+sharednls
+confint.default( sharednls )
+# Equation for shared genes
+shared_function = function(n) 1806.728*exp(-n/1.702) + 1049.569
+
+# Subset out the new genes (per added genome) and see where it plateaus
+campy_new <- campy[campy$type == 'new', ]
+campy_new_genes <- campy_new[,1:2]
+names(campy_new_genes ) <- c("n", "F")
+newnls <- nls(F ~ kppa * exp(- n / tau ) + omega, data = campy_new_genes, 
+    start = list(kppa = 1806, tau = 1.702 , omega = 1049))
+newnls
+confint.default( newnls )
+# Equation for new genes
+kppa = 8201.0209
+tau=0.6778
+omega=206.0316
+new_function = function(n) kppa*exp(-n/tau) + omega
+
+# Subset out the average number of genes per genome
+genomes <- campy[campy$type=='pangenome',]
+# See how many genes are in each genome
+genomes1 <- as.data.frame( unique( genomes[genomes$num_genomes==1,] ) )
+# Get the average and put into the equation
+summary( genomes1 )
+# Equation for pan-genome
+pan_function = function(n) 2116 + omega*(n-1) + (kppa*exp(-2/tau)) * ( (1-exp(-(n-1)/tau) )/(1-exp(-1/tau)) )
+
+# Plot with functions
+# separate plots
+# A) Shared/Core Genes
+ggplot( campy_shared, aes(x=num_genomes, y=num_genes ) ) +
+  geom_point() + 
+  stat_function( fun=shared_function, size=1 ) +
+  labs( x="Number of Genomes", y="Number of Shared Protein Families" ) +
+  theme_bw()
+
+# B) New genes
+ggplot( campy_new, aes(x=num_genomes, y=num_genes )) +
+  geom_point() + 
+  stat_function( fun=new_function, size=1 ) +
+  labs(x="Number of Genomes", y="Number of New Protein Families") +
+  theme_bw()
+
+# C) Pangenome
+ggplot( genomes, aes(x=num_genomes, y=num_genes )) + 
+  geom_point() + 
+  stat_function( fun=pan_function, size=1 ) +
+  labs(x="Number of Genomes", y="Number of Protein Families") +
+  theme_bw()
+```
+
+## Figure 3C: qPCR analysis of a selection of *C. showae* virulence/pathogenicity genes in 2 hr pure culture and following 2 hr explant co-culture. 
+```{r Fig_2C}
+### Load the package or install if not present
+if (!require("ggplot2")) {install.packages("ggplot2")
+  library(ggplot2)}
+if (!require("RColorBrewer")) {install.packages("RColorBrewer")
+  library(RColorBrewer)}
+#Read in data
+qPCR <- read.csv("C_showae_qPCR.txt", sep = "\t")
+#There are two data points for every strain, growth and gene data point
+#Group them by the sets of two
+num_pairs <- (nrow(qPCR))/2
+qPCR$Paired <- rep(c(1,2), num_pairs)
+#Add a column which includes Strain and Paired data
+qPCR$Strain_Paired <- paste(qPCR$Strain, qPCR$Paired)
+#Reorder factors for Gene
+qPCR$Gene <- factor(qPCR$Gene, levels = c("PomA", "TonB", "HopAH2-2", "HlyD", "Acca", "FlaB"))
+#Produce pdf file with plot with colours separting strains
+#Produce plot a an object with ggplot
+g <- ggplot(qPCR, aes(x=Growth, y=Value, colour=Strain)) +
+  #Add points to plot and set size of points
+  geom_point(aes(), size=2) +
+  #Add points to the plot that join points by the Strain and the paired sample
+  geom_line(aes(group = Strain_Paired), size = 0.5) +
+  #Set y and x label titles
+  labs(y = "Relative expression (pgi)", x = "") +
+  #Facet the plots by the gene
+  facet_wrap(~ Gene, scales = "free_y", nrow = 2 ) +
+  scale_shape_discrete(name = "C.showae strains") +
+  #Alter the format of the plot
+  theme(text= element_text(size=8), axis.text.y  = element_text(size=8), 
+        axis.text.x  = element_text(size=8, angle = 20, hjust = 1),
+        legend.text= element_text(size = 8), legend.key.size = unit(4, "mm"), 
+        plot.margin=unit(c(1,1,1,1),"mm"))
+#Save the ggplot object contianing an object as a plot
+ggsave("Fig_2C.pdf", g, units="mm", height=100, width=150, dpi=300)  
+```
+```{r Fig_2C_figure, echo=FALSE}
+g
+```
+
+## Figure 4A: Differential gene families across *C. showae* isolates
+```{r Fig_4A, fig.align = "center", fig.height = 8, fig.width = 12}
+### Load the package or install if not present
+if (!require("pheatmap")) {install.packages("pheatmap")
+  library(pheatmap)}
+if (!require("viridis")) {install.packages("viridis")
+  library(viridis)}
+# Read in data
+selected_for_heatmap <- read.delim( file="Fig4A_selectedforheatmap.txt", sep="\t")
+sfh.matrix <- selected_for_heatmap[1:48,2:12]
+rownames( sfh.matrix ) <- selected_for_heatmap[,16]
+# Annotate row types
+annotation_row = data.frame( selected_for_heatmap$Type )
+names(annotation_row) <- c("type")
+rownames( annotation_row ) <- selected_for_heatmap[,16]
+# Annotate isolates
+annotation_col = data.frame( 
+  c( "Adherent/Invasive", "Adherent/Invasive", "Adherent/Invasive", "Adherent/Invasive", "NA",
+   "NA", "Adherent/Invasive", "NA", "Non-Adherent/Non-Invasive", "Non-Adherent/Non-Invasive", 
+   "Non-Adherent/Non-Invasive" )
+)
+names( annotation_col ) <- c("Phenotype")
+rownames( annotation_col ) <- names( selected_for_heatmap )[2:12]
+# Plot heatmap
+pheatmap( sfh.matrix, cluster_rows = F, labels_row = selected_for_heatmap[,1], 
+          annotation_row=annotation_row, annotation_col=annotation_col, gaps_row=c(31),
+          color = cividis(100))
+```
+
+## Figure 5: Differential UniRef90 annotations in supragingival plaque vs. tongue dorsum metagenomes as compared to *C. showae* isolates
+```{r Fig_5, fig.align = "center", fig.height = 12, fig.width = 18}
+### Load the package or install if not present
+if (!require("pheatmap")) {install.packages("pheatmap")
+  library(pheatmap)}
+if (!require("viridis")) {install.packages("viridis")
+  library(viridis)}
+if (!require("vegan")) {install.packages("vegan")
+  library(vegan)}
+# Read in metagenomes where UniRef90s have been filtered by:
+# 1. >=75% prevalent in supragingival plaque AND <=25% in tongue dorsum
+# 2. >=75% prevalent in tongue dorsum AND <=25% in supragingival plaque
+metagenome <- read.delim( file="Fig5_metagenomes_0.75_0.25_filt_vNONAME", sep="\t")
+# Get metadata
+metagenome_wmeta <- read.delim( file="Fig5_combined_tables.annot", sep="\t" )
+metagenome.matrix <- as.matrix( metagenome[,2:76] )
+rownames( metagenome.matrix ) <- metagenome[,1]
+annotation_col <- as.data.frame( t(metagenome_wmeta[6,2:76]) )
+colnames( annotation_col ) <- c("BodySite")
+annotation_row <- as.data.frame( c(1:dim(metagenome.matrix)[1]) )
+rownames( annotation_row ) <- rownames( metagenome.matrix )
+## calculate Jaccard distances
+mdist <- vegdist( metagenome.matrix, method="jaccard" )
+tmetagenome.matrix <- t(metagenome.matrix)
+tmdist <- vegdist( tmetagenome.matrix, method="jaccard" )
+## plot with jaccard ordering
+### clustering methods
+### the agglomeration method to be used. This should be (an unambiguous abbreviation of) one of "ward.D", "ward.D2", "single", "complete", "average" (= UPGMA), "mcquitty" (= WPGMA), "median" (= WPGMC) or "centroid" (= UPGMC).
+pheatmap( metagenome.matrix, clustering_distance_rows=mdist, clustering_method = "average", 
+          clustering_distance_cols = tmdist, annotation_col = annotation_col, 
+          fontsize_row = 8, fontsize_col = 8, color = cividis(100) )
+```
+
+## Supplementary Figure 1A: Assessment of genome assemblies.
+```{r Sup_Fig_1A}
+### Load the package or install if not present
+if (!require("RColorBrewer")) {
+  install.packages("RColorBrewer")
+  library(RColorBrewer)}
+if (!require("ggplot2")) {install.packages("ggplot2")
+  library(ggplot2)}
+if (!require("tidyr")) {install.packages("tidyr")
+  library(tidyr)}
+#read in data
+assembly_info <- read.csv("C_showae_Assembly_assessment.txt", sep = "\t")
+#Remove columns which are not of intersted
+assembly_info <- assembly_info[,c(1,6,7,8,9)]
+#Rename column names
+colnames(assembly_info) <- c("Strain", "Largest contig/Genome assembly", "N50/Genome assembly", "Completeness", "Error free")
+#Convert wide to long
+info_long <- gather(assembly_info, Measure, Value, 2:ncol(assembly_info))
+#Order strains
+info_long$Strain <- factor(info_long$Strain, levels = levels(info_long$Strain)[c(5,6,7,8,9,1,2,3,10,4,11,12)])
+#Order measures
+info_long$Measure <- factor(info_long$Measure, levels = levels(as.factor(info_long$Measure))[c(3,4,1,2)])
+#Set colours
+col.brew <- c(brewer.pal(9, "Set1"),brewer.pal(8,"Set2"),brewer.pal(12,"Set3"))
+#Produce facetted bar chart
+g_bar <- ggplot(info_long, aes(x = Strain, y=Value, fill=Strain)) +
+  #Make plot a unstacked bar chart
+  geom_bar(stat="identity", position="Dodge") +
+  #Facet the plot by the differnet measures
+  facet_wrap(~ Measure, nrow = 2) +
+  #Give y label a title
+  labs(y = "Percentage") +
+  #Format plot
+  theme(text= element_text(size=8), axis.text.y  = element_text(size=8), 
+        axis.text.x  = element_text(size=8, angle = 25, hjust = 1),
+        legend.position = "none",
+        plot.margin=unit(c(1,1,1,1),"mm"))
+ggsave("Fig_5.pdf", g_bar, units="mm", height=150, width=170, dpi=300)
+```
+```{r Sup_Fig_1A_figure, echo=FALSE}
+g_bar
+```
+
+## Supplementary Figure 2: The *C. showae* pangenome
+```{r Sup_Fig_2}
+### Load the package or install if not present
+if (!require("pheatmap")) {install.packages("pheatmap")
+  library(pheatmap)}
+if (!require("viridis")) {install.packages("viridis")
+  library(viridis)}
+if (!require("vegan")) {install.packages("vegan")
+  library(vegan)}
+# Read in data
+strains <- read.delim( file = "SupFig2_strain_centroids_table.txt", check.names = F )
+strains.matrix <- as.matrix( strains[,3:13] )
+t_strains.matrix <- t( strains.matrix )
+rownames( strains.matrix ) <- paste( strains[,1], strains[,2], sep=": ")
+colnames( t_strains.matrix ) <- strains[,1]
+# Calculate jaccard distances
+jdist <- vegdist( strains.matrix, method = "jaccard" )
+jtdist <- vegdist( t_strains.matrix, method= "jaccard" )
+jclust <- hclust( jdist, method="average" )
+jtclust <- hclust( jtdist, method="average" )
+# Plot heatmap
+pheatmap( strains.matrix, clustering_distance_rows=jdist, 
+          clustering_distance_cols = jtdist, show_rownames = F, clustering_method = "average",
+          color=cividis(n=100))
+```
+
+## Supplementary Figure 4: VFDB presence/absence across *C. showae* isolates
+```{r Sup_Fig_4, fig.align = "center", fig.height = 20, fig.width =5 }
+### Load the package or install if not present
+if (!require("pheatmap")) {install.packages("pheatmap")
+  library(pheatmap)}
+if (!require("viridis")) {install.packages("viridis")
+  library(viridis)}
+if (!require("vegan")) {install.packages("vegan")
+  library(vegan)}
+# Read in data
+vfdb <- read.delim( file="SupFig4_vfdb.txt", sep="\t", check.names=F )
+vfdb.matrix <- as.matrix( vfdb[,2:13])
+rownames( vfdb.matrix ) <- vfdb[,1]
+# calculate Jaccard distances
+mdist <- vegdist( vfdb.matrix, method="jaccard" )
+tvfdb.matrix <- t(vfdb.matrix)
+tmdist <- vegdist( tvfdb.matrix, method="jaccard" )
+# plot with jaccard ordering, clustering methods
+pheatmap( vfdb.matrix, clustering_distance_rows=mdist, clustering_method = "average", 
+          clustering_distance_cols = tmdist, fontsize_col = 8, fontsize_row=8,
+          color=cividis(100))
+```
+
+## Supplementary Figure 5: CARD presence/absence across *C. showae* isolates
+```{r Sup_Fig_5}
+### Load the package or install if not present
+if (!require("pheatmap")) {install.packages("pheatmap")
+  library(pheatmap)}
+if (!require("viridis")) {install.packages("viridis")
+  library(viridis)}
+if (!require("vegan")) {install.packages("vegan")
+  library(vegan)}
+# Read in data
+card <- read.delim( file="SupFig5_card_strict.txt", sep="\t", check.names=F)
+card.matrix <- card[,2:12]
+rownames( card.matrix ) <- card$gene
+# Calculate Jaccard distances
+mdist <- vegdist( card.matrix, method="jaccard" )
+tcard.matrix <- t(card.matrix)
+tmdist <- vegdist( tcard.matrix, method="jaccard" )
+# Plot heatmap
+pheatmap( card.matrix, clustering_distance_rows=mdist, clustering_method = "average", 
+          clustering_distance_cols = tmdist, fontsize_col = 8, fontsize_row=8,
+          color=cividis(100)
+          )
+```
